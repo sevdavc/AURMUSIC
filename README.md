@@ -2,6 +2,6 @@
 
 AURMUSIC is a music bot for Discord. 
 
-##RESOURCES
+## RESOURCES
 https://www.youtube.com/watch?v=HMmIm1RZiBM&t=128s
 
