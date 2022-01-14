@@ -34,6 +34,9 @@ client.on("message", async (message) => {
     case "skip":
       skip(message, serverQueue);
       break;
+    case "help":
+      help(message);
+      break;
   }
 
   async function execute(message, serverQueue) {
@@ -65,7 +68,6 @@ client.on("message", async (message) => {
           let connection = await vc.join();
           queueConstructor.connection = connection;
           play(message.guild, queueConstructor.songs[0]);
-          message.channel.send(result.first.url);
         } catch (err) {
           console.error(err);
           queue.delete(message.guild.id);
@@ -86,6 +88,7 @@ client.on("message", async (message) => {
       queue.delete(guild.id);
       return;
     }
+    message.channel.send(songFeatures.url);
     const dispatcher = serverQueue.connection
       .play(ytdl(songFeatures.url))
       .on("finish", () => {
@@ -112,6 +115,18 @@ client.on("message", async (message) => {
     }
     serverQueue.connection.dispatcher.end();
     message.channel.send(result.first.url);
+  }
+  function help(message) {
+    if (!message) {
+      return message.channel.send("Yardım bölümünde hata oluştu.");
+    }
+    const helpmessage = new Discord.MessageEmbed()
+      .setTitle("AURMUSIC BOT KOMUTLARI")
+      .setDescription(
+        "*play: Listeye şarkı ekleme \n *skip: Listedeki sıradaki şarkıya geçme \n *stop: Listeyi durdurma"
+      );
+
+    message.channel.send(helpmessage);
   }
 });
 
